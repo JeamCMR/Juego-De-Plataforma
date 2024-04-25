@@ -32,8 +32,30 @@ class Player {
         this.width = proportionalSize(40);
         this.height = proportionalSize(40);
     };
-    
+    //Metodo encargado de la posicion y el color del player
     draw(){
-
+       ctx.fillStyle = "#99c9ff";
+       ctx.fillRect(this.position.x,this.position.y,this.width,this.height);
+    };
+    //Metodo encargado de actualizar la posicion y velocidad del del player a medida que se mueve
+    update(){
+        this.draw();
+        this.position.x += this.velocity.x;
+        this.position.y += this.velocity.y;
+        if ((this.position.y+this.height+ this.velocity.y) <= canvas.height) {
+            if(this.position.y < 0){
+                this.position.y = 0;
+                this.velocity.y = gravity;
+            }
+            this.velocity.y += gravity;
+        }else{
+            this.velocity.y = 0;
+        }
+        if(this.position.x < this.width){
+            this.position.x = this.width;
+        }
+        if (this.position.x >= canvas.width - 2 * this.width) {
+             cxcc
+        }
     }
 }
