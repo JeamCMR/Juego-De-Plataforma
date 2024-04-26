@@ -35,6 +35,28 @@ class Platform {
 }
 
 
+class CheckPoint {
+  constructor(x,y,z){
+   this.position = {
+    x,
+    y,
+    };
+   this.width = proportionalSize(40);
+   this.height = proportionalSize(70);
+   this.claimed = false;
+  }
+  draw(){
+    ctx.fillStyle = "#f1be32";
+    ctx.fillRect(this.position.x,this.position.y, this.width,this.height);
+  };
+  claim(){
+    this.width = 0;
+    this.height = 0;
+    this.position.y = Infinity;
+    this.claimed = true;
+  }
+}
+
 class Player {
     constructor(){
         this.position = {
@@ -97,8 +119,14 @@ const platformPositions = [
 ]
 
 const platforms  = platformPositions.map(platform => new Platform(platform.x , platform.y));
-//Funcion de movimiento del jugador
 
+//Array con las posiciones de los checkPoint
+const checkpointPositions = [
+  {x: 1170, y: proportionalSize(80), z: 1},
+  {x: 2900, y: proportionalSize(330), z:2 },
+  {x: 4800, y: proportionalSize(80), z: 3} 
+]
+//Funcion de movimiento del jugador
 const animate = () =>{
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
