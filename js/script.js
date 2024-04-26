@@ -80,6 +80,7 @@ class Player {
 //Se crear una instancia de la clase 
 const player = new Player();
 
+//Lista de posiciones de las plataformas
 const platformPositions = [
     { x:500, y:proportionalSize(450)  },
     { x:700 , y:proportionalSize(400) },
@@ -94,11 +95,16 @@ const platformPositions = [
     { x:4400, y:proportionalSize(200) },
     { x:4700, y:proportionalSize(150) }
 ]
+
+const platforms  = platformPositions.map(platform => new Platform(platform.x , platform.y));
+console.log(platforms);
 //Funcion de movimiento del jugador
 
 const animate = () =>{
     requestAnimationFrame(animate);
-    ctx .clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //Recorre el array platforms de objectos de la clase Platform con sus respectivas posiciones en X y Y;
+    platforms.forEach(platform => platform.draw());
     player.update();
     if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
         player.velocity.x = 5;
@@ -107,6 +113,12 @@ const animate = () =>{
     }else {
         player.velocity.x = 0;
     } 
+    // Mover la posicion de la plataforma segun se mueva la posicion del jugador
+    if (keys.rightKey.pressed && isCheckpointCollisionDetectionActive){
+        platforms.forEach(platform =>  {platform.position.x -= 5});
+    }else if(keys.leftKey.pressed && isCheckpointCollisionDetectionActive){
+        platforms.forEach((platform)=>{ platform.position.x += 5});
+      }
 }
 
 //Letras a presionar
