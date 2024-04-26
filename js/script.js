@@ -65,4 +65,10 @@ class Player {
 const player = new Player();
 
 //Funcion para iniciar el juego
-const startGame = () =>{}
+const startGame = () =>{
+    canvas.style.display = "block";
+    startScreen.style.display = "none";
+    player.draw();
+}
+
+startBtn.addEventListener("click",startGame)
