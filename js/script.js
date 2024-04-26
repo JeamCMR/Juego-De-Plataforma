@@ -78,7 +78,7 @@ const animate = () =>{
     }else {player.velocity.x = 0;} 
 }
 
-
+//Letras a presionar
 const keys = {
     rightKey:{
         pressed: false
@@ -87,6 +87,39 @@ const keys = {
         pressed: false
     }
 }
+
+//Aplicar moviento al jugador
+const movePlayer = (key,xVelocity, isPressed) =>{
+    if (!isCheckpointCollisionDetectionActive) {
+        player.velocity.x = 0;
+        player.velocity.y = 0;
+        return;
+    }
+    switch(key){
+        case "ArrowLeft":
+            keys.leftKey.pressed = isPressed;
+            if (xVelocity === 0) {
+                player.velocity.x = xVelocity;
+            }
+            player.velocity.x -= xVelocity;
+        break
+        
+        case "ArrowUp":
+        case " ":
+        case "Spacebar":
+            player.velocity.y -= 8;
+        break
+        
+        case "ArrowRight":
+            keys.rightKey.pressed = isPressed;
+            if (xVelocity === 0) {
+                player.velocity.x = xVelocity;
+            }
+            player.velocity.x += xVelocity ;
+        break
+    }
+}
+
 
 //Funcion para iniciar el juego
 const startGame = () =>{
