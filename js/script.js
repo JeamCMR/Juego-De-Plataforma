@@ -71,11 +71,13 @@ const animate = () =>{
     requestAnimationFrame(animate);
     ctx .clearRect(0, 0, canvas.width, canvas.height);
     player.update();
-    if (!keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
+    if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
         player.velocity.x = 5;
-    }else if (!keys.leftKey.pressed && player.position.x > proportionalSize(100)){
+    }else if (keys.leftKey.pressed && player.position.x > proportionalSize(100)){
         player.velocity.x = -5;
-    }else {player.velocity.x = 0;} 
+    }else {
+        player.velocity.x = 0;
+    } 
 }
 
 //Letras a presionar
@@ -125,7 +127,18 @@ const movePlayer = (key,xVelocity, isPressed) =>{
 const startGame = () =>{
     canvas.style.display = "block";
     startScreen.style.display = "none";
-    player.draw();
+    animate();
 }
 
 startBtn.addEventListener("click",startGame)
+
+
+//Agregando  eventos para mover el jugador
+//Evento para el boton Flecha abajo
+window.addEventListener("keydown",({key})=>{
+    movePlayer(key,8,true);
+});
+//Evento para la funcion Flecha arriba
+window.addEventListener("keyup",({key})=>{
+    movePlayer(key,0,false);
+});
