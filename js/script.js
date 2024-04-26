@@ -126,12 +126,17 @@ const checkpointPositions = [
   {x: 2900, y: proportionalSize(330), z:2 },
   {x: 4800, y: proportionalSize(80), z: 3} 
 ]
+// Se crea un array donde se alamacenan los objetos cheackpoint con su posicion correspondiente
+const checkpoints = checkpointPositions.map(checkpoint => new CheckPoint(checkpoint.x,checkpoint.y, checkpoint.z));
+
 //Funcion de movimiento del jugador
 const animate = () =>{
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    //Recorre el array platforms de objectos de la clase Platform con sus respectivas posiciones en X y Y;
+    //Recorre el array platforms de objectos de la clase Platform y los pinta;
     platforms.forEach(platform => platform.draw());
+      //Recorre el array checkpoint de objectos y los pintan en el html;
+    checkpoints.forEach(checkpoint => checkpoint.draw());
     player.update();
     if (keys.rightKey.pressed && player.position.x < proportionalSize(400)) {
         player.velocity.x = 5;
@@ -143,8 +148,14 @@ const animate = () =>{
     // Mover la posicion de la plataforma segun se mueva la posicion del jugador
     if (keys.rightKey.pressed && isCheckpointCollisionDetectionActive){
         platforms.forEach(platform =>  {platform.position.x -= 5});
+        checkpoints.forEach(checkpoint =>{
+          checkpoint.position.x -= 5;
+        });
     }else if(keys.leftKey.pressed && isCheckpointCollisionDetectionActive){
         platforms.forEach((platform)=>{ platform.position.x += 5});
+        checkpoints.forEach(checkpoint =>{
+          checkpoint.position.x += 5;
+        });
     }
 
     platforms.forEach((platform) => {
@@ -218,6 +229,17 @@ const startGame = () =>{
     canvas.style.display = "block";
     startScreen.style.display = "none";
     animate();
+}
+
+//Funcion para mostrar el mensaje al tocar un checkPoint
+const showCheckpointScreen = (msg) =>{
+  checkpointScreen.style.display = "block";
+  checkpointMessage.textContent = msg;
+  if (isCheckpointCollisionDetectionActive) {
+    setTimeout(()=>{
+      checkpointScreen.style.display = "none"
+    },2000)
+  }
 }
 
 startBtn.addEventListener("click",startGame)
