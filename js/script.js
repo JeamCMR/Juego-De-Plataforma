@@ -55,7 +55,14 @@ class Player {
             this.position.x = this.width;
         }
         if (this.position.x >= canvas.width - 2 * this.width) {
-             cxcc
+            this.position.x = canvas.width - 2 * this.width;
         }
     }
 }
+
+
+//Se crear una instancia de la clase 
+const player = new Player();
+
+//Funcion para iniciar el juego
+const startGame = () =>{}
